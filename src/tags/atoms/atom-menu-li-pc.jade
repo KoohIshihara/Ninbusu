@@ -1,0 +1,47 @@
+atom-menu-li-pc(data-module='{ opts.content.data }')
+  div.wrap-atom.my40
+    a(href='#').pb4 { opts.content.label }
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      .wrap-atom {
+        a {
+          display: block;
+          color: #fff;
+          font-size: 20px;
+          font-weight: lighter;
+          text-decoration: none;
+        }
+      }
+      .wrap-atom:after {
+        content: "";
+        display: block;
+        width: 0%;
+        height: 1px;
+        background: #fff;
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-delay: 0s;
+        transition-timing-function: ease;
+      }
+      .wrap-atom:hover:after {
+        width: 100%;
+      }
+    }
+
+  script.
+    
+    /*
+    this.on('updated', function(){
+      $(this.root).click(function() {
+        var url = location.href;
+        if(url.indexOf('detail') != -1){ // detailにいる時
+          // page-top update時にスクロール処理
+          scrollPoint = this.dataset.module; // global
+        }else{ // topにいる時
+          TO_SCROLL.toScroll(this.dataset.module);
+        }    
+      });
+    });
+    */

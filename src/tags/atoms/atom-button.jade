@@ -1,0 +1,24 @@
+atom-button.f.fc
+  a(href='{opts.content.href}').wrap-atom
+    span.pb2 {opts.content.label}
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      .wrap-atom {
+        display: inline-block;
+        span {
+          cursor: pointer;
+          text-align: center;
+          display: block;
+          color: #FFF;
+          letter-spacing: 1px;
+          font-size: 16px;
+          font-variant-ligatures: no-common-ligatures;
+          font-weight: lighter;
+          border-bottom: solid 0.4px;
+        }
+      }
+    }
+
+  script.

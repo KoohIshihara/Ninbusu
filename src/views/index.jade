@@ -15,9 +15,22 @@ block content
       riot.mount('content', 'page-members', {content: content});
       riot.update();
     })
+
+    riot.route('/getstarted/*', function(tagName) {
+      console.log(tagName);
+      // APIからとってくる
+      var content = {
+        name: 'kooh',
+        intro: 'Artist',
+      }
+      riot.mount('content', 'page-getstarted', {content: 'content'});
+      riot.mount('wrapper-form', tagName, {content: content});
+      riot.update();
+    })
+
     riot.route(function(tagName) {
       console.log(tagName);
-      tagName = tagName || 'home';
+      tagName = tagName || 'page-getstarted-wif';//'page-top';
       //debugger
       riot.mount('content', tagName, {content: 'content'});
       riot.update();
@@ -25,3 +38,5 @@ block content
     riot.route.start(true);
     
     var tags = riot.mount('app');
+
+    // console.log(Aura);

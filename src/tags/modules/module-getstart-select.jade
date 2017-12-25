@@ -1,0 +1,59 @@
+module-getstart-select
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-a.f.fc
+        a(href='#getstarted/module-getstart-activate').pb2 Issue editions and add Aura to your digital identity ?
+      span.or.my40 or
+      div.wrap-a.f.fc
+        a(href='', id='onlyIssue').pb2 Just issue editions for now ?
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+          .wrap-a {
+            a {
+              color: #FFF;
+              display: inline-block;
+              letter-spacing: 1px;
+              font-size: 20px;
+              font-variant-ligatures: no-common-ligatures;
+              text-align: center;
+              border-bottom: solid 0.4px;
+            }
+          }
+          .or {
+            color: #FFF;
+            display: block;
+            letter-spacing: 1px;
+            font-size: 20px;
+            font-variant-ligatures: no-common-ligatures;
+            font-weight: lighter;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      /*
+      if(Aura.formContents == undefined){
+        window.location.href = '#getstarted/module-getstart-wiff';
+      }else{
+      */
+        $('#onlyIssue').on('click',function(){
+          // ここでissueする
+
+          //window.location.href = '#getstarted/module-getstart-select';
+        });
+      //}
+    });

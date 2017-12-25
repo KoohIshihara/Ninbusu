@@ -1,0 +1,52 @@
+item-getstarted-input.mb28
+  div.wrap-item
+    div.main.f
+      span.label {opts.content.label}
+      span.ml2 :
+      input(type='text', id='{opts.content.id}').ml8
+    p(each='{item in opts.content.comments}').comment.mt8 {item}
+    
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 100%;
+      .wrap-item {
+        .main {
+          border-bottom: solid 0.4px #FFF;
+          .label {
+            white-space: nowrap;
+          }
+          span {
+            color: #FFF;
+            display: block;
+            letter-spacing: 1px;
+            font-size: 16px;
+            font-variant-ligatures: no-common-ligatures;
+            font-weight: lighter;
+          }
+          input {
+            width: 100%;
+            border: 0px;
+            outline: 0;
+            background: transparent;
+            position: relative;
+            bottom: 3px;
+            color: #FFF;
+            font-variant-ligatures: no-common-ligatures;
+            letter-spacing: 1px;
+          }
+        }
+        .comment {
+          word-break: initial;
+          color: #FFF;
+          display: block;
+          letter-spacing: 1px;
+          font-size: 12px;
+          font-variant-ligatures: no-common-ligatures;
+          font-weight: lighter;
+        }
+      }
+    }
+
+  script.

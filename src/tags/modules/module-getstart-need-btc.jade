@@ -1,0 +1,54 @@
+module-getstart-need-btc
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-getstarted-text(each='{item in textContents}', content='{item}')
+      div.wrap-info.mb32
+        item-getstarted-info(each='{item in infoContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          display: block;
+          word-break: break-all;
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      /*
+      if(Aura.formContents == undefined){
+        window.location.href = '#getstarted/module-getstart-wiff';
+      }else{
+      */
+        self.textContents = [
+          'Please send some Bitcoin to this address.',
+        ];
+        self.infoContents = [
+          {
+            label: 'Address',
+            content: 'mrQcta37ieeAPVjXSspfwhkgGMMwuFkPve',//Aura.formContents.address,
+            comments: [
+                        '* We recommend 30,000 satoshi (0.0003 BTC).',
+                        '* It takes about 10 minutes for Block Chain to authenticate your transaction.',
+                      ],
+          },
+        ];
+      //}
+    });
+
+    this.button = {
+      label: 'I sent some Bitcoin this address',
+      href: '#getstarted/module-getstart-issue',
+    }

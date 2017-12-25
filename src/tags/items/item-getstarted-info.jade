@@ -1,0 +1,40 @@
+item-getstarted-info.py20
+  div.wrap-item
+    div.main.f
+      span.label {opts.content.label}
+      span.px4 :
+      span.content {opts.content.content}
+    p(each='{item in opts.content.comments}').comment.mt8 {item}
+    
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 100%;
+      .wrap-item {
+        .main {
+          .label {
+            white-space: nowrap;
+          }
+          span {
+            color: #FFF;
+            display: block;
+            letter-spacing: 1px;
+            font-size: 16px;
+            font-variant-ligatures: no-common-ligatures;
+            font-weight: lighter;
+          }
+        }
+        .comment {
+          word-break: initial;
+          color: #FFF;
+          display: block;
+          letter-spacing: 1px;
+          font-size: 12px;
+          font-variant-ligatures: no-common-ligatures;
+          font-weight: lighter;
+        }
+      }
+    }
+
+  script.

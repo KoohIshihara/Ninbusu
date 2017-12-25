@@ -1,0 +1,50 @@
+module-getstart-wif
+  div.wrap-module.f.fh
+    div.wrap-info
+      item-getstarted-info(each='{item in contents}', content='{item}')
+      div.wrap-button.mt32
+        atom-button(content='{button}')
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-info {
+          display: block;
+          word-break: break-all;
+        }
+      }
+    }
+
+  script.
+
+    this.on('update', function(){
+      var wif = Aura.createKey().wif;
+      var address = Aura.createAddress(wif).address;
+
+      this.contents = [
+        {
+          label: 'Wif',
+          content: wif,
+          comments: ['* Please do not forget or leak this wif key.'],
+        },
+        {
+          label: 'Address',
+          content: address,
+          comments: ['* This is the address where edditions of your identity will be.'],
+        },
+      ];
+
+      Aura.formKey = {
+        wif: wif,
+        address: address,
+      };
+    });
+
+    this.button = {
+      label: 'I took a note of Wif',
+      href: '#getstarted/module-getstart-need-btc',
+    }

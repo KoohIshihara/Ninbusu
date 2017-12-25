@@ -1,0 +1,36 @@
+item-getstarted-text.mb8
+  div.wrap-item
+    div.main
+      span.content.pb2 {opts.content}
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 100%;
+      .wrap-item {
+        .main {
+          .label {
+            white-space: nowrap;
+          }
+          span {
+            color: #FFF;
+            display: block;
+            letter-spacing: 1px;
+            font-size: 20px;
+            font-variant-ligatures: no-common-ligatures;
+            text-align: center;
+          }
+        }
+        .comment {
+          word-break: initial;
+          color: #FFF;
+          display: block;
+          letter-spacing: 1px;
+          font-size: 14px;
+          font-variant-ligatures: no-common-ligatures;
+          font-weight: lighter;
+        }
+      }
+    }
+
+  script.
