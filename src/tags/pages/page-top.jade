@@ -1,14 +1,44 @@
 page-top
   div.wrap-page
     module-header
+    div.wrap-hiro.f.fh.flex-column
+      div.wrap-logo.f.fh.flex-column
+        img(src='./img/aura_js.svg')
+        span.mt28 Make Editions of Your Identity
+      a(href='#getstarted/module-getstart-wif').button-start.px20.py8.mt60 Get Started
 
   style(scoped, type='less').
     :scope {
       display: block;
+      min-height: 100vh;
+      background: #00a0bc;
       .wrap-page {
-        
+        .wrap-hiro {
+          width: 100%;
+          height: 100vh;
+          .wrap-logo {
+            img {
+              display: block;
+              width: 200px;
+            }
+            span {
+              display: block;
+              font-size: 24px;
+              font-weight: lighter;
+              text-align: center;
+              color: #FFF;
+              letter-spacing: 1px;
+            }
+          }
+          .button-start {
+            color: #FFF;
+            border: solid 0.6px;
+            font-weight: lighter;
+            font-size: 24px;
+            letter-spacing: 1px;
+          }  
+        }
       }
     }
 
   script.
-    console.log(Aura);

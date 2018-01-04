@@ -5,16 +5,6 @@ block content
   app
   script(src='./scripts/tags.js')
   script.
-    riot.route('/members/*', function(tagName) {
-      console.log(tagName);
-      // APIからとってくる
-      var content = {
-        name: 'kooh',
-        intro: 'Artist',
-      }
-      riot.mount('content', 'page-members', {content: content});
-      riot.update();
-    })
 
     riot.route('/getstarted/*', function(tagName) {
       console.log(tagName);
@@ -30,7 +20,7 @@ block content
 
     riot.route(function(tagName) {
       console.log(tagName);
-      tagName = tagName || 'page-getstarted-wif';//'page-top';
+      tagName = tagName || 'page-top';
       //debugger
       riot.mount('content', tagName, {content: 'content'});
       riot.update();

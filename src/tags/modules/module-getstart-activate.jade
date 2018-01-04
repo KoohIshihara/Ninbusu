@@ -34,7 +34,7 @@ module-getstart-activate
         self.infoContents = [
           {
             label: 'Where',
-            id: 'formUrl',
+            id: 'formWhere',
             comments: ['* The place or url whre Digital Identity is.'],
           },
           {
@@ -54,21 +54,21 @@ module-getstart-activate
         ];
 
         $('#buttonActivate').on('click',function(){
-          var assetMeta = {
-            name: $('#formName').val(),
-            sex: $('#formSex').val(),
-            Nation: $('#formNation').val(),
+          var txMeta = {
+            where: $('#formWhere').val(),
+            right: $('#formRight').val(),
+            discription: $('#formDiscription').val(),
           };
-          Aura.formAssetMeta = assetMeta;
+          Aura.txMeta = txMeta;
           
           // ここでフォームが全て入力されているかチェック
 
-          window.location.href = '#getstarted/module-getstart-select';
+          window.location.href = '#getstarted/module-getstart-fin';
         });
       //}
     });
 
     this.button = {
-      label: 'Next',
+      label: 'OK',
       //href: '#getstarted/module-getstart-select',
     }
