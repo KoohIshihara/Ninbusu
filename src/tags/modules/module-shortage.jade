@@ -1,0 +1,112 @@
+module-shortage
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-info.mb32
+        item-info(each='{item in infoContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')#issueAsset
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          display: block;
+          word-break: break-all;
+        }
+      }
+    }
+
+
+  script.
+
+    var self = this;
+
+
+    self.textContents = [
+      'Failed to issue, because of a shortage of Bitcoin.',
+      'Please send some Bitcoin to this address.',
+    ];
+    self.infoContents = [
+      {
+        label: 'Address',
+        content: Aura.formKey.address,
+        comments: [
+                    '* We recommend 30,000 satoshi (0.0003 BTC).',
+                    '* It takes about 10 minutes for Block Chain to authenticate your transaction.',
+                  ],
+      },
+    ];
+
+    //this.on('update', function(){
+      /*
+      if(Aura.formContents == undefined){
+        window.location.href = '#getstarted/module-getstart-wiff';
+      }else{
+      */
+
+        var name = Aura.formAssetMeta.name;
+        var sex = Aura.formAssetMeta.sex;
+        var nation = Aura.formAssetMeta.nation;
+        var amount = Aura.formAssetMeta.amount;
+
+        self.confirmContents = [
+          'Name: ' + name,
+          'Sex: ' + sex,
+          'Nation: ' + nation,
+          'Amount of Editions: ' + amount,
+        ];
+
+        $('#issueAsset').on('click',function(){
+
+          var address = Aura.formKey.address;
+
+          var name = Aura.formAssetMeta.name;
+          var sex = Aura.formAssetMeta.sex;
+          var nation = Aura.formAssetMeta.nation;
+          var amount = Aura.formAssetMeta.amount;
+
+          var asset = {
+            issueAddress: address,
+            amount: amount,
+            fee: 3000,
+            metadata: {
+              assetName: '石原航',        
+              issuer: 'Kooh', 
+              description: "The asset of digital identity",
+              urls: [
+                {name: 'Artist who made Aura',url: 'http://kooh.me/', mimeType: 'text/html', dataHash: '66111ceeed2b7bb977dc2354e870a655a91f2c6909347bf53d3d7918b5743fc'},
+              ],
+              userData :{
+                sex: 'male',
+                nation: 'jp',
+              },
+            },
+          };
+
+          Aura.postToApi('issue', asset, function(_data){
+            var wif = Aura.formKey.wif;
+            var txHex = _data.txHex;
+            var signedTx = Aura.signTransaction(txHex, wif);
+            var transaction = {
+              'txHex': signedTx,
+            };
+            Aura.postToApi('broadcast', transaction, function(_data){
+              console.log('casted');
+              console.log(_data);
+            });
+          });
+
+        });
+      //}
+    //});
+
+    this.button = {
+      label: 'Issue Editions of Identity',
+      href: '#getstarted/module-getstart-fin',
+    }

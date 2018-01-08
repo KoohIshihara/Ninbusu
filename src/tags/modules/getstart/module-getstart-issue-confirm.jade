@@ -1,11 +1,12 @@
-module-getstart-select
+module-getstart-issue-confirm
   div.wrap-module.f.fh
     div.wrap-content
-      div.wrap-a.f.fc
-        a(href='#getstarted/module-getstart-activate').pb2 Issue editions and add Aura to your digital identity ?
-      span.or.my40 or
-      div.wrap-a.f.fc
-        a(href='#getstarted/module-getstart-fin', id='onlyIssue').pb2 Just issue editions for now ?
+      div.wrap-text
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-confirm-text.py40
+        p(each='{item in confirmContents}').mb12 {item}
+      div.wrap-button
+        atom-button(content='{button}')#issueAsset
 
   style(scoped, type='less').
     :scope {
@@ -16,25 +17,13 @@ module-getstart-select
         min-height: 100vh;
         .wrap-content {
           word-break: break-all;
-          .wrap-a {
-            a {
-              color: #FFF;
-              display: inline-block;
-              letter-spacing: 1px;
-              font-size: 20px;
-              font-variant-ligatures: no-common-ligatures;
+          .wrap-confirm-text {
+            p {
               text-align: center;
-              border-bottom: solid 0.4px;
+              color: #fff;
+              font-weight: 100;
+              letter-spacing: 1px;
             }
-          }
-          .or {
-            color: #FFF;
-            display: block;
-            letter-spacing: 1px;
-            font-size: 20px;
-            font-variant-ligatures: no-common-ligatures;
-            font-weight: lighter;
-            text-align: center;
           }
         }
       }
@@ -50,35 +39,51 @@ module-getstart-select
         window.location.href = '#getstarted/module-getstart-wiff';
       }else{
       */
+        self.textContents = [
+          'Please confirm that your personal data is correct.',
+        ];
 
-        $('#onlyIssue').on('click',function(){
-          // ここでissueする
+        var name = Aura.formAssetMeta.name;
+        var sex = Aura.formAssetMeta.sex;
+        var nation = Aura.formAssetMeta.nation;
+        var amount = Aura.formAssetMeta.amount;
+
+        self.confirmContents = [
+          'Name: ' + name,
+          'Sex: ' + sex,
+          'Nation: ' + nation,
+          'Amount of Editions: ' + amount,
+        ];
+
+        $('#issueAsset').on('click',function(){
+
           var address = Aura.formKey.address;
+
           var name = Aura.formAssetMeta.name;
           var sex = Aura.formAssetMeta.sex;
           var nation = Aura.formAssetMeta.nation;
+          var amount = Aura.formAssetMeta.amount;
 
           var asset = {
             issueAddress: address,
-            amount: 100,
+            amount: amount,
             fee: 3000,
             metadata: {
-              assetName: name,        
-              issuer: name, 
+              assetName: '石原航',        
+              issuer: 'Kooh', 
               description: "The asset of digital identity",
               urls: [
                 {name: 'Artist who made Aura',url: 'http://kooh.me/', mimeType: 'text/html', dataHash: '66111ceeed2b7bb977dc2354e870a655a91f2c6909347bf53d3d7918b5743fc'},
               ],
               userData :{
-                name: name,
-                sex: sex,
-                nation: nation,
+                sex: 'male',
+                nation: 'jp',
               },
             },
           };
 
           Aura.postToApi('issue', asset, function(_data){
-            var assetId = _data.assetId;
+            var wif = Aura.formKey.wif;
             var txHex = _data.txHex;
             var signedTx = Aura.signTransaction(txHex, wif);
             var transaction = {
@@ -89,8 +94,11 @@ module-getstart-select
               console.log(_data);
             });
           });
-
-          // window.location.href = '#getstarted/module-getstart-select';
         });
       //}
     });
+
+    this.button = {
+      label: 'Issue Editions of Identity',
+      href: '#getstarted/module-getstart-fin',
+    };

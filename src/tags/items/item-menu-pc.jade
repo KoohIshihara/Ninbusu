@@ -1,7 +1,7 @@
 item-menu-pc.s-hide
-  div.wrap-item.f.flex-row-reverse
+  div.wrap-item.f.fc
     div.wrap-menu-pc.f.flex-middle
-      atom-menu-li-pc(each='{item in contents}', content='{item}').ml40
+      atom-menu-li-pc(each='{item in contents}', content='{item}').mx16
 
   style(scoped, type='less').
     :scope {
@@ -18,7 +18,10 @@ item-menu-pc.s-hide
   script.
 
     this.contents = [
-      {label:'Top', data: 'module-top'},
-      {label:'About', data: 'module-about'},
-      {label:'Editioin', data: 'module-edition'},
+      {label:'Top', data: 'module-top', href: '#'},
+      {label:'About', data: 'module-about', href: '#'},
+      {label:'Isuue Edition', data: 'module-isuue', href: '#getstarted/module-getstart-wif'},
+      {label:'Add Aura', data: 'module-add', href: '#getstarted/module-addaura-wif'},
+      {label:'Edition State', data: 'module-state', href: '#'},
+      {label:'Management', data: 'module-management', href: '#'},
     ];

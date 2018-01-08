@@ -1,0 +1,112 @@
+module-addaura-add-confirm
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-confirm-text.py40
+        p(each='{item in confirmContents}').mb12 {item}
+      div.wrap-button
+        atom-button(content='{button}')#addAura
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+          .wrap-confirm-text {
+            p {
+              text-align: center;
+              color: #fff;
+              font-weight: 100;
+              letter-spacing: 1px;
+            }
+          }
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      /*
+      if(Aura.formContents == undefined){
+        window.location.href = '#getstarted/module-getstart-wiff';
+      }else{
+      */
+        self.textContents = [
+          'Please confirm that Aura is correct.',
+        ];
+
+        var where = Aura.txMeta.where;
+        var right = Aura.txMeta.right;
+        var discription = Aura.txMeta.discription;
+
+        self.confirmContents = [
+          'Where: ' + where,
+          'Right: ' + right,
+          'Discription: ' + discription,
+        ];
+
+        var txMeta = {
+          where: where,
+          right: right,
+          discription: discription,
+        };
+
+        $('#addAura').on('click',function(){
+          
+          var address = Aura.formKey.address;
+          //var address = 'mi835P8h1Atm1y5SEAjyHqb7YVFJCaUPwC';
+          Aura.getAddressInfo(address, function(_data){
+            debugger
+            var assetId = _data.utxos[0].assets[0].assetId;
+            var wif = Aura.formKey.wif
+            var address = Aura.formKey.address;
+
+            var sendAsset = {
+              'from': [address],   
+              'fee': 5000,
+              'to': [{
+                'address': address,
+                'amount': 1, // ここはmetaのamountと常に同じにする
+                'assetId': assetId
+              }],
+              //'sendutxo' : [],
+              'metadata': {
+                'assetId': assetId,
+                /*
+                'assetName': '石原航',
+                'issuer': 'Kooh Ishihara',
+                'description': 'New Form Asset by Kooh',
+                'urls': [{name:'icon', url: 'https://pbs.twimg.com/profile_images/572390580823412736/uzfQSciL_bigger.png', mimeType: 'image/png', dataHash: ''}],
+                */
+                'userData': {
+                  'amount': 1, // ここはtoのamountと揃える
+                  'additional': {
+                    where: 'http://kooh.me/',
+                    right: 'all',
+                    description: 'test',
+                  },
+                },
+              },
+            };
+            var callback = function(_data){
+              console.log('comp activate');
+            };
+            Aura.activateAsset(assetId, wif, address, sendAsset, callback);
+          });
+
+        });
+      //}
+    });
+
+    this.button = {
+      label: 'Add Aura',
+      href: '#addaura/module-addaura-fin',
+    };

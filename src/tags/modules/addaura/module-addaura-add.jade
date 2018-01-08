@@ -1,4 +1,4 @@
-module-getstart-activate
+module-addaura-add
   div.wrap-module.f.fh
     div.wrap-content
       div.wrap-text.mb32
@@ -6,7 +6,7 @@ module-getstart-activate
       div.wrap-info.mb60
         item-input(each='{item in infoContents}', content='{item}')
       div.wrap-button
-        atom-button(content='{button}')#buttonActivate
+        atom-button(content='{button}')#confirmAura
 
   style(scoped, type='less').
     :scope {
@@ -26,16 +26,16 @@ module-getstart-activate
     var self = this;
 
     this.on('update', function(){
-      /*
-      if(Aura.formContents == undefined){
-        window.location.href = '#getstarted/module-getstart-wiff';
-      }else{
-      */
-        self.infoContents = [
+      
+      self.textContents = [
+        'Please input what Aura you add.',
+      ];
+
+      self.infoContents = [
           {
             label: 'Where',
             id: 'formWhere',
-            comments: ['* The place or url whre Digital Identity is.'],
+            comments: ['* The place or url where Digital Identity is.'],
           },
           {
             label: 'Right',
@@ -47,28 +47,36 @@ module-getstart-activate
             id: 'formDiscription',
             comments: ['* Option'],
           },
-        ];
+      ];
 
-        self.textContents = [
-          'Please input what Aura you will add to.',
-        ];
+      $('#confirmAura').on('click',function(){
+        
+        var where = $('#formWhere').val();
+        var right = $('#formRight').val();
+        var discription = $('#formDiscription').val();
 
-        $('#buttonActivate').on('click',function(){
-          var txMeta = {
-            where: $('#formWhere').val(),
-            right: $('#formRight').val(),
-            discription: $('#formDiscription').val(),
-          };
-          Aura.txMeta = txMeta;
-          
-          // ここでフォームが全て入力されているかチェック
+        var txMeta = {
+          where: where,
+          right: right,
+          discription: discription,
+        };
+        Aura.txMeta = txMeta;
 
-          window.location.href = '#getstarted/module-getstart-fin';
-        });
-      //}
+        if(where==''){
+          alert('Please input "Where".');
+          return;
+        }
+
+        if(right==''){
+          alert('Please input "Right".');
+          return;
+        }
+
+      });
+      
     });
 
     this.button = {
-      label: 'OK',
-      //href: '#getstarted/module-getstart-select',
-    }
+      label: 'Next',
+      href: '#addaura/module-addaura-add-confirm',
+    };

@@ -1,9 +1,9 @@
-item-getstarted-input.mb28
+item-info.py20
   div.wrap-item
     div.main.f
       span.label {opts.content.label}
-      span.ml2 :
-      input(type='text', id='{opts.content.id}').ml8
+      span.px4 :
+      span.content {opts.content.content}
     p(each='{item in opts.content.comments}').comment.mt8 {item}
     
 
@@ -13,7 +13,6 @@ item-getstarted-input.mb28
       width: 100%;
       .wrap-item {
         .main {
-          border-bottom: solid 0.4px #FFF;
           .label {
             white-space: nowrap;
           }
@@ -24,17 +23,6 @@ item-getstarted-input.mb28
             font-size: 16px;
             font-variant-ligatures: no-common-ligatures;
             font-weight: lighter;
-          }
-          input {
-            width: 100%;
-            border: 0px;
-            outline: 0;
-            background: transparent;
-            position: relative;
-            bottom: 3px;
-            color: #FFF;
-            font-variant-ligatures: no-common-ligatures;
-            letter-spacing: 1px;
           }
         }
         .comment {

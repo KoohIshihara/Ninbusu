@@ -2,9 +2,9 @@ module-getstart-need-btc
   div.wrap-module.f.fh
     div.wrap-content
       div.wrap-text.mb32
-        item-getstarted-text(each='{item in textContents}', content='{item}')
+        item-text(each='{item in textContents}', content='{item}')
       div.wrap-info.mb32
-        item-getstarted-info(each='{item in infoContents}', content='{item}')
+        item-info(each='{item in infoContents}', content='{item}')
       div.wrap-button
         atom-button(content='{button}')
 
@@ -26,7 +26,7 @@ module-getstart-need-btc
 
     var self = this;
 
-    this.on('update', function(){
+    //this.on('update', function(){
       /*
       if(Aura.formContents == undefined){
         window.location.href = '#getstarted/module-getstart-wiff';
@@ -38,7 +38,7 @@ module-getstart-need-btc
         self.infoContents = [
           {
             label: 'Address',
-            content: 'mrQcta37ieeAPVjXSspfwhkgGMMwuFkPve',//Aura.formContents.address,
+            content: Aura.formKey.address,
             comments: [
                         '* We recommend 30,000 satoshi (0.0003 BTC).',
                         '* It takes about 10 minutes for Block Chain to authenticate your transaction.',
@@ -46,7 +46,7 @@ module-getstart-need-btc
           },
         ];
       //}
-    });
+    //});
 
     this.button = {
       label: 'I sent some Bitcoin this address',

@@ -1,0 +1,36 @@
+module-error
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')#issueAsset
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          display: block;
+          word-break: break-all;
+        }
+      }
+    }
+
+
+  script.
+
+    var self = this;
+
+    self.textContents = [
+      'Error',
+      'Sorry, please start over from the beginning.',
+    ];
+
+    this.button = {
+      label: 'Back to Top',
+      href: '#',
+    }

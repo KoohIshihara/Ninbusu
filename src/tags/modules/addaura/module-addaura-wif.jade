@@ -1,0 +1,67 @@
+module-addaura-wif
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-info.mb60
+        item-input(each='{item in infoContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')#gertFormKey
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      
+      self.textContents = [
+        'Please input your wif key.',
+      ];
+
+      self.infoContents = [
+        {
+          label: 'Wif',
+          id: 'formWif',
+          comments: [
+            '* Wif key is created, when you issue editions.'
+          ],
+        },
+      ];
+
+      $('#gertFormKey').on('click',function(){
+        var wif = $('#formWif').val();
+        
+        if(wif.length != 52 || wif == ''){
+          alert('Please input wif correctly.');
+          return;
+        }
+
+        var address = Aura.createAddress(wif).address;
+
+        Aura.formKey = {
+          wif: wif,
+          address: address,
+        };
+
+        window.location.href = '#getstarted/module-addaura-add';
+      });
+      
+    });
+
+    this.button = {
+      label: 'Next',
+      //href: '#getstarted/module-getstart-select',
+    }

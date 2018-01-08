@@ -1,0 +1,108 @@
+module-getstart-issue
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-info.mb60
+        item-input(each='{item in infoContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')#buttonAssetMeta
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      /*
+      if(Aura.formContents == undefined){
+        window.location.href = '#getstarted/module-getstart-wiff';
+      }else{
+      */
+        self.infoContents = [
+          {
+            label: 'Name',
+            id: 'formName',
+            comments: [
+              '* What is your name ?'
+            ],
+          },
+          {
+            label: 'Sex',
+            id: 'formSex',
+            comments: [
+              '* Please input "Male" or "Female".'
+            ],
+          },
+          {
+            label: 'Nation',
+            id: 'formNation',
+            comments: [
+              '* What is your nation ?',
+            ],
+          },
+          {
+            label: 'Amount of Editions',
+            id: 'formAmount',
+            comments: [
+              '* How many Editions do you isuue ?',
+              '* Please input 10 and more number.',
+              '* Issurance of too many editions cause the inflation of your identity.',
+            ],
+          },
+        ];
+
+        self.textContents = [
+          'Please input your personal data.',
+        ];
+
+        $('#buttonAssetMeta').on('click',function(){
+          var assetMeta = {
+            name: $('#formName').val(),
+            sex: $('#formSex').val(),
+            nation: $('#formNation').val(),
+            amount: $('#formAmount').val(),
+          };
+          
+          // ここでフォームが全て入力されているかチェック
+          Object.keys(assetMeta).forEach(function (key){
+            if(assetMeta[key] == '') enableNext = false;
+          });
+          if(!(enableNext)){
+            alert('Please fill out all forms correctly.');
+            return;
+          }
+
+          if(assetMeta.sex != 'Male' && assetMeta.sex != 'Female'){
+            alert('Please input Male or Female.');
+            return;
+          }
+
+          if(!(Number.isInteger(parseInt(assetMeta.amount))) || assetMeta.amount < 10){
+            alert('Please input 10 and more number.');
+            return;
+          }
+          
+          Aura.formAssetMeta = assetMeta;
+          window.location.href = '#getstarted/module-getstart-issue-confirm';
+
+        });
+      //}
+    });
+
+    this.button = {
+      label: 'Next',
+      //href: '#getstarted/module-getstart-select',
+    }

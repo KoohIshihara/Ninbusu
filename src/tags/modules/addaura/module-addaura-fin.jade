@@ -1,0 +1,48 @@
+module-addaura-fin
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb30
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-sub.mb30
+        p If you want to check Aura of your digital identity, you can do 
+          a(href='#') here
+          | .
+      div.wrap-button
+        atom-button(content='{button}')#testConfirm
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+          .wrap-sub {
+            p {
+              letter-spacing: 0.4px;
+              font-weight: 100;
+              color: #FFF;
+              a {
+                display: inline-block;
+                border-bottom: solid 0.4px;
+                padding-bottom: 2px;
+                font-weight: 400;
+              }
+            }
+          }
+        }
+      }
+    }
+
+  script.
+    this.textContents = [
+      'Adding Aura to degital identity will be done soon.',
+      'It takes about 10 minutes to issue your edition.',
+    ];
+
+    this.button = {
+      label: 'Back to Top',
+      href: '#editionstate/module-editionstate-address',
+    };

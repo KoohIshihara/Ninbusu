@@ -1,6 +1,6 @@
 atom-menu-li-pc(data-module='{ opts.content.data }')
   div.wrap-atom.my40
-    a(href='#').pb4 { opts.content.label }
+    a(href='{ opts.content.href }').pb4 { opts.content.label }
 
   style(scoped, type='less').
     :scope {
@@ -11,6 +11,7 @@ atom-menu-li-pc(data-module='{ opts.content.data }')
           color: #fff;
           font-size: 20px;
           font-weight: lighter;
+          letter-spacing: 1.4px;
           text-decoration: none;
         }
       }

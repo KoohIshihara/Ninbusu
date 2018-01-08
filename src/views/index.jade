@@ -6,6 +6,18 @@ block content
   script(src='./scripts/tags.js')
   script.
 
+    riot.route('/error/*', function(tagName) {
+      console.log(tagName);
+      // APIからとってくる
+      var content = {
+        name: 'kooh',
+        intro: 'Artist',
+      }
+      riot.mount('content', 'page-error', {content: 'content'});
+      riot.mount('wrapper-message', tagName, {content: content});
+      riot.update();
+    })
+
     riot.route('/getstarted/*', function(tagName) {
       console.log(tagName);
       // APIからとってくる
@@ -14,6 +26,30 @@ block content
         intro: 'Artist',
       }
       riot.mount('content', 'page-getstarted', {content: 'content'});
+      riot.mount('wrapper-form', tagName, {content: content});
+      riot.update();
+    })
+
+    riot.route('/addaura/*', function(tagName) {
+      console.log(tagName);
+      // APIからとってくる
+      var content = {
+        name: 'kooh',
+        intro: 'Artist',
+      }
+      riot.mount('content', 'page-addaura', {content: 'content'});
+      riot.mount('wrapper-form', tagName, {content: content});
+      riot.update();
+    })
+
+    riot.route('/editionstate/*', function(tagName) {
+      console.log(tagName);
+      // APIからとってくる
+      var content = {
+        name: 'kooh',
+        intro: 'Artist',
+      }
+      riot.mount('content', 'page-editionstate', {content: 'content'});
       riot.mount('wrapper-form', tagName, {content: content});
       riot.update();
     })

@@ -1,7 +1,9 @@
 module-getstart-wif
-  div.wrap-module.f.fh
+  div.wrap-module.f.fh.flex-column
+    div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
     div.wrap-info
-      item-getstarted-info(each='{item in contents}', content='{item}')
+      item-info(each='{item in contents}', content='{item}')
       div.wrap-button.mt32
         atom-button(content='{button}')
 
@@ -21,15 +23,19 @@ module-getstart-wif
 
   script.
 
-    this.on('update', function(){
+    //this.on('update', function(){
       var wif = Aura.createKey().wif;
       var address = Aura.createAddress(wif).address;
+
+      self.textContents = [
+        'Please take a note of this wif.',
+      ];
 
       this.contents = [
         {
           label: 'Wif',
           content: wif,
-          comments: ['* Please do not forget or leak this wif key.'],
+          comments: ['* Do never leak this wif key.'],
         },
         {
           label: 'Address',
@@ -42,7 +48,7 @@ module-getstart-wif
         wif: wif,
         address: address,
       };
-    });
+    //});
 
     this.button = {
       label: 'I took a note of Wif',
