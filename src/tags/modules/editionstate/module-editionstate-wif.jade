@@ -1,0 +1,122 @@
+module-editionstate-wif
+  div.wrap-module.f.fh
+    div.wrap-content
+      div.wrap-text.mb32
+        item-text(each='{item in textContents}', content='{item}')
+      div.wrap-info.mb60
+        item-input(each='{item in infoContents}', content='{item}')
+      div.wrap-button
+        atom-button(content='{button}')#getAddressForEditionState
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        .wrap-content {
+          word-break: break-all;
+        }
+      }
+    }
+
+  script.
+
+    var self = this;
+
+    this.on('update', function(){
+      
+      self.textContents = [
+        'Please input address or wif key.',
+      ];
+
+      self.infoContents = [
+        {
+          label: 'Wif or Address',
+          id: 'wifOrKey',
+          comments: [
+            '* Wif key and adress is created, when you issue editions.',
+          ],
+        },
+      ];
+
+      $('#getAddressForEditionState').on('click',function(){
+        var wifOrKey = $('#wifOrKey').val();
+        
+        if(wifOrKey.length != 34 && wifOrKey.length != 52 || wifOrKey == ''){
+          alert('Please input wif or address correctly.');
+          return;
+        }
+
+        if(wifOrKey.length == 52){ // wifの場合
+          var wif = wifOrKey;
+          var address = Aura.createAddress(wifOrKey).address;
+          Aura.formKey = {
+            wif: wif,
+            address: address,
+          };
+        }else{ // addressの場合
+          var address = wifOrKey;
+          Aura.formKey = {
+            wif: null,
+            address: address,
+          };
+        }
+
+        Aura.getAddressInfo(address, function(_data){
+
+          Aura.addressUtxos = _data.utxos;
+          Aura.addressUtxosLength = _data.utxos.length;
+          Aura.counter = 0;
+
+          Aura.checkIssueAddress = function(){
+            var counter = Aura.counter;
+            var assetId = Aura.addressUtxos[counter].assets[0].assetId;
+            var txId = Aura.addressUtxos[counter].txid;
+            var index = Aura.addressUtxos[counter].index;
+
+            var param = assetId + '/' + txId + ':' + index;
+
+            Aura.getFromApi('assetmetadata', param, function(_data){
+              var issueAddress = _data.issueAddress;
+              if(issueAddress == Aura.formKey.address){
+                // issueAddressが自分のアドレスと一致した時の処理
+                Aura.assetMeatdata = _data.metadataOfIssuence.data; //resultでつかう
+                Aura.assetId = _data.assetId;
+                var assetId = Aura.assetId;
+                var address = Aura.formKey.address;
+
+                Aura.getActivatedAsset(assetId, address, function(_data){
+                  Aura.editionInfo = _data;
+                  window.location.href = '#editionstate/module-editionstate-result';
+                });
+              }else{
+                // issueAddressが自分のアドレスと一致しない場合はもう一度
+                if(Aura.counter == Aura.addressUtxos.length){
+                  // アウラを付与できるエディションがありませんでした。
+                  window.location.href = '#addaura/module-editionstate-noeditions';
+                }else{
+                  Aura.counter++;
+                  Aura.checkIssueAddress();
+                }
+              }// else
+            });
+          }; // checkIssueAddress
+
+          if(Aura.addressUtxos[0] == undefined){
+            window.location.href = '#editionstate/module-editionstate-noeditions';
+          }else{
+            Aura.checkIssueAddress();
+          }
+
+        }); // getAddressInfo
+
+      }); // getAddressForEditionState
+      
+    }); // update
+
+    this.button = {
+      label: 'Next',
+      //href: '#getstarted/module-getstart-select',
+    }

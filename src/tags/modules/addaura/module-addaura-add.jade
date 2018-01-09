@@ -55,6 +55,8 @@ module-addaura-add
         var right = $('#formRight').val();
         var discription = $('#formDiscription').val();
 
+        if(discription=="") discription = 'No Description'
+
         var txMeta = {
           where: where,
           right: right,

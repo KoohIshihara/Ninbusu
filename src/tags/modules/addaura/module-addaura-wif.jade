@@ -6,7 +6,7 @@ module-addaura-wif
       div.wrap-info.mb60
         item-input(each='{item in infoContents}', content='{item}')
       div.wrap-button
-        atom-button(content='{button}')#gertFormKey
+        atom-button(content='{button}')#getFormKey
 
   style(scoped, type='less').
     :scope {
@@ -41,7 +41,7 @@ module-addaura-wif
         },
       ];
 
-      $('#gertFormKey').on('click',function(){
+      $('#getFormKey').on('click',function(){
         var wif = $('#formWif').val();
         
         if(wif.length != 52 || wif == ''){

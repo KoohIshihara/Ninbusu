@@ -76,6 +76,8 @@ module-getstart-issue
             amount: $('#formAmount').val(),
           };
           
+          var enableNext = true;
+          
           // ここでフォームが全て入力されているかチェック
           Object.keys(assetMeta).forEach(function (key){
             if(assetMeta[key] == '') enableNext = false;

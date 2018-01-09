@@ -1,0 +1,36 @@
+item-editionstate-aura.f.fc
+  div.wrap-aura.py20
+    h3.mb20 { opts.content.vol }
+    div.wrap-list.mb20
+      p.label.mb6 Where: 
+      p.label { opts.content.where }
+    div.wrap-list.mb20
+      p.label.mb6 Right:
+      p.label { opts.content.right }
+    div.wrap-list.mb20
+      p.label.mb6 Description:
+      p.label { opts.content.description }
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      .wrap-aura {
+        display: inline-block;
+        h3 {
+          color: #FFF;
+          font-weight: 400;
+          letter-spacing: 1px;
+          text-align: center;
+        }
+        .wrap-list {
+          p {
+            display: block;
+            color: #FFF;
+            font-weight: 100;
+          }
+        }
+      }
+    }
+
+
+  script.

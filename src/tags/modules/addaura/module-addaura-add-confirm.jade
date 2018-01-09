@@ -34,116 +34,111 @@ module-addaura-add-confirm
     var self = this;
 
     this.on('update', function(){
-      /*
-      if(Aura.formContents == undefined){
-        window.location.href = '#getstarted/module-getstart-wiff';
-      }else{
-      */
-        self.textContents = [
-          'Please confirm that Aura is correct.',
-        ];
+      
+      self.textContents = [
+        'Please confirm that Aura is correct.',
+      ];
 
-        var where = Aura.txMeta.where;
-        var right = Aura.txMeta.right;
-        var discription = Aura.txMeta.discription;
+      var where = Aura.txMeta.where;
+      var right = Aura.txMeta.right;
+      var discription = Aura.txMeta.discription;
 
-        self.confirmContents = [
-          'Where: ' + where,
-          'Right: ' + right,
-          'Discription: ' + discription,
-        ];
+      self.confirmContents = [
+        'Where: ' + where,
+        'Right: ' + right,
+        'Discription: ' + discription,
+      ];
 
-        var txMeta = {
-          where: where,
-          right: right,
-          discription: discription,
-        };
+      var txMeta = {
+        where: where,
+        right: right,
+        discription: discription,
+      };
 
-        $('#addAura').on('click',function(){
-          
-          var address = Aura.formKey.address;
-          //var address = 'mi835P8h1Atm1y5SEAjyHqb7YVFJCaUPwC';
-          Aura.getAddressInfo(address, function(_data){
+      $('#addAura').on('click',function(){
+        
+        var address = Aura.formKey.address;
+        Aura.getAddressInfo(address, function(_data){
 
-            Aura.activateFunc = function(_assetId){
-              var assetId = _assetId;
-              var wif = Aura.formKey.wif;
-              var address = Aura.formKey.address;
-              var sendAsset = {
-                'from': [address],   
-                'fee': 5000,
-                'to': [{
-                  'address': address,
-                  'amount': 1, // ここはmetaのamountと常に同じにする
-                  'assetId': assetId
-                }],
-                //'sendutxo' : [],
-                'metadata': {
-                  'assetId': assetId,
-                  /*
-                  'assetName': '石原航',
-                  'issuer': 'Kooh Ishihara',
-                  'description': 'New Form Asset by Kooh',
-                  'urls': [{name:'icon', url: 'https://pbs.twimg.com/profile_images/572390580823412736/uzfQSciL_bigger.png', mimeType: 'image/png', dataHash: ''}],
-                  */
-                  'userData': {
-                    'amount': 1, // ここはtoのamountと揃える
-                    'additional': {
-                      where: Aura.txMeta.where,
-                      right: Aura.txMeta.right,
-                      description: Aura.txMeta.discription,
-                    },
+          Aura.activateFunc = function(_assetId){
+            var assetId = _assetId;
+            var wif = Aura.formKey.wif;
+            var address = Aura.formKey.address;
+            var sendAsset = {
+              'from': [address],   
+              'fee': 5000,
+              'to': [{
+                'address': address,
+                'amount': 1, // ここはmetaのamountと常に同じにする
+                'assetId': assetId
+              }],
+              //'sendutxo' : [],
+              'metadata': {
+                'assetId': assetId,
+                /*
+                'assetName': '石原航',
+                'issuer': 'Kooh Ishihara',
+                'description': 'New Form Asset by Kooh',
+                'urls': [{name:'icon', url: 'https://pbs.twimg.com/profile_images/572390580823412736/uzfQSciL_bigger.png', mimeType: 'image/png', dataHash: ''}],
+                */
+                'userData': {
+                  'amount': 1, // ここはtoのamountと揃える
+                  'additional': {
+                    where: Aura.txMeta.where,
+                    right: Aura.txMeta.right,
+                    description: Aura.txMeta.discription,
                   },
                 },
-              };
-              var callback = function(_data){
-                console.log('comp activate');
-              };
-              Aura.activateAsset(assetId, wif, address, sendAsset, callback);
-            }
+              },
+            };
+            var callback = function(_data){
+              console.log('comp activate');
+            };
+            Aura.activateAsset(assetId, wif, address, sendAsset, callback);
+          }
 
-            Aura.addressUtxos = _data.utxos;
-            Aura.addressUtxosLength = _data.utxos.length;
-            Aura.counter = 0;
+          Aura.addressUtxos = _data.utxos;
+          Aura.addressUtxosLength = _data.utxos.length;
+          Aura.counter = 0;
 
-            Aura.checkIssueAddress = function(){
-              var counter = Aura.counter;
-              var assetId = Aura.addressUtxos[counter].assets[0].assetId;
-              var txId = Aura.addressUtxos[counter].txid;
-              var index = Aura.addressUtxos[counter].index;
+          Aura.checkIssueAddress = function(){
+            var counter = Aura.counter;
+            var assetId = Aura.addressUtxos[counter].assets[0].assetId;
+            var txId = Aura.addressUtxos[counter].txid;
+            var index = Aura.addressUtxos[counter].index;
 
-              var param = assetId + '/' + txId + ':' + index;
+            var param = assetId + '/' + txId + ':' + index;
 
-              Aura.getFromApi('assetmetadata', param, function(_data){
-                var issueAddress = _data.issueAddress;
-                if(issueAddress == Aura.formKey.address){
-                  // issueAddressが自分のアドレスと一致した時の処理
-                  Aura.assetId = _data.assetId;
-                  Aura.activateFunc(Aura.assetId);
+            Aura.getFromApi('assetmetadata', param, function(_data){
+              var issueAddress = _data.issueAddress;
+              if(issueAddress == Aura.formKey.address){
+                // issueAddressが自分のアドレスと一致した時の処理
+                Aura.assetId = _data.assetId;
+                Aura.activateFunc(Aura.assetId);
+              }else{
+                // issueAddressが自分のアドレスと一致しない場合はもう一度
+                if(Aura.counter == Aura.addressUtxos.length){
+                  // アウラを付与できるエディションがありませんでした。
+                  window.location.href = '#addaura/module-editionstate-noeditions';
                 }else{
-                  // issueAddressが自分のアドレスと一致しない場合はもう一度
-                  if(Aura.counter == Aura.addressUtxos.length){
-                    // アウラを付与できるエディションがありませんでした。
-                    window.location.href = '#addaura/module-editionstate-noeditions';
-                  }else{
-                    Aura.counter++;
-                    Aura.checkIssueAddress();
-                  }
-                }// else
-              });
-            }; // checkIssueAddress
+                  Aura.counter++;
+                  Aura.checkIssueAddress();
+                }
+              }// else
+            });
+          }; // checkIssueAddress
 
-            if(Aura.addressUtxos[0] == undefined){
-              window.location.href = '#addaura/module-editionstate-noeditions';
-            }else{
-              Aura.checkIssueAddress();
-            }
+          if(Aura.addressUtxos[0] == undefined){
+            window.location.href = '#addaura/module-editionstate-noeditions';
+          }else{
+            Aura.checkIssueAddress();
+          }
 
-          });
+        }); // getAddressInfo
 
-        });
-      //}
-    });
+      }); // #addAura
+      
+    }); // update
 
     this.button = {
       label: 'Add Aura',

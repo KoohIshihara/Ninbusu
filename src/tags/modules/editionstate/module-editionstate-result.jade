@@ -1,0 +1,71 @@
+module-editionstate-result.py40
+  div.wrap-module.py100.s-py40
+    item-h2(content='Certificate of Didital Identity')
+    div.wrap-certificate.mb20
+      div.wrap-asset.f.fc.py40
+        div
+          p.mb12 Name: { assetContet.name }
+          p.mb12 Sex: { assetContet.sex }
+          p.mb12 Nation: { assetContet.nation }
+          p.mb12 Edition Amount: { assetContet.amount } 
+          p.mb12 Amount with Aura: { assetContet.with } 
+          p.mb12 Amount without Aura: { assetContet.without } 
+      div.wrap-aura
+        item-editionstate-aura(each='{item in auraContents}', content='{item}')
+
+  style(scoped, type='less').
+    :scope {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      .wrap-module {
+        min-height: 100vh;
+        display: block;
+        word-break: break-all;
+        .wrap-certificate {
+          p {
+            color: #FFF;
+            font-weight: 100;
+            letter-spacing: 1px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+
+  script.
+
+    var self = this;
+
+    var assetMetadata = Aura.assetMeatdata.userData;
+
+    var unactivated = Aura.editionInfo.unactivated_uxtos;
+    var unactivatedAmount = 0;
+    for(var i=0; i<unactivated.length; i++){
+      unactivatedAmount += unactivated[i].utxoAmount;
+    }
+    var totalAmount = unactivated[0].totalSupply;
+
+    this.assetContet = {
+      name: assetMetadata.name,
+      sex: assetMetadata.sex,
+      nation: assetMetadata.nation,
+      amount: assetMetadata.amount,
+      with: totalAmount-unactivatedAmount,
+      without: unactivatedAmount,
+    }
+
+    this.auraContents = [];
+    var activated = Aura.editionInfo.activated_utxos;
+    for(var i=0; i < activated.length; i++){
+      var meta = activated[i].metadataOfUtxo.data.userData.additional;
+      var content = {
+        vol: 'Edition with Aura vol.' + (i+1),
+        where: meta.where,
+        right: meta.right,
+        description: meta.description,
+      };
+      this.auraContents.push(content);      
+    }
+    
